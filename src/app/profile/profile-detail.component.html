@@ -1,0 +1,317 @@
+<div class="row">
+	<form materialize class="col s12"
+		style="border: 1px solid grey; width: 90%; margin-left: 60px; padding-bottom: 30px; background-color: white;"
+		#profileForm="ngForm">
+		<div class="row headerDiv">
+			<li class="col s4" [ngClass]="{headerBackground: personalDetailsTab}"
+				style="font-size: 20px; padding-top: 10px; padding-left: 40px; list-style: none;">
+				<i style="color: black" class="material-icons left">person</i> <a
+				style="cursor: pointer" (click)="showTab('personalDetails')">Personal
+					Details</a> <i [hidden]="!personalDetailsTab" style="color: black"
+				class="material-icons right">arrow_forward</i>
+			</li>
+			<li class="col s4"
+				[ngClass]="{headerBackground: educationalDetailsTab}"
+				style="font-size: 20px; padding-top: 10px; padding-left: 40px; list-style: none;">
+				<i style="color: black" class="material-icons left">school</i> <a
+				style="cursor: pointer" (click)="showTab('educationalDetails')">Educational
+					Details</a> <i [hidden]="!educationalDetailsTab" style="color: black"
+				class="material-icons right">arrow_forward</i>
+			</li>
+			<li class="col s4" [ngClass]="{headerBackground: otherInfoTab}"
+				style="font-size: 20px; padding-top: 10px; padding-left: 40px; list-style: none;">
+				<i style="color: black" class="material-icons left">person_pin_circle</i>
+				<a style="cursor: pointer" (click)="showTab('otherInfo')">Other
+					Information</a>
+			</li>
+		</div>
+		<div [hidden]="!personalDetailsTab" id="personalDetails"
+			class="col s12" style="width: 90%">
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="candidate_name" type="text" class="validate"
+						name="candidateName" minlength="4"
+						[(ngModel)]="profile.candidateName" required> <label
+						for="candidate_name" class="materialize-element-field active"
+						data-error="Minimum 4 char required">Candidate Name <font
+						color="red">*</font></label>
+				</div>
+				<div class="input-field col s6">
+					<input id="email_id" type="email" class="validate" name="emailId"
+						[(ngModel)]="profile.emailId"
+						pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+					<label for="email_id" data-error="Wrong format" class="active">Email
+						Id <font color="red">*</font>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="mobile-number" type="text" class="validate"
+						name="mobileNo" pattern="\d*" minlength="10" maxlength="10"
+						[(ngModel)]="profile.mobileNo" required> <label
+						for="mobile-number" class="active"
+						data-error="Number is incorrect">Mobile Number <font
+						color="red">*</font></label>
+				</div>
+				<div class="input-field col s6">
+					<input id="alet_mob_no" type="text" class="validate"
+						name="altmobileNo" pattern="\d*" minlength="10" maxlength="10"
+						[(ngModel)]="profile.altmobileNo"> <label
+						for="alet_mob_no" class="active" data-error="Number is incorrect">Alternative
+						Mobile Number</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="passportNo" type="text" name="passportNo"
+						[(ngModel)]="profile.passportNo" class="validate"> <label
+						for="passportNo" class="active">Passport No</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="skype_id" type="text" class="validate" name="skypeId"
+						[(ngModel)]="profile.skypeId"> <label for="skype_id"
+						class="active">Skype Id</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="current_location" type="text" name="currentLocation"
+						[(ngModel)]="profile.currentLocation" class="validate" required>
+					<label for="current_location" class="active">Current
+						Location <font color="red">*</font>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="address" type="text" class="validate" name="address"
+						[(ngModel)]="profile.address"> <label for="address"
+						class="active">Address</label>
+				</div>
+			</div>
+			<div style="float: right">
+				<button class="btn waves-effect waves-light" name="action"
+					(click)="showTab('educationalDetails')">
+					Next <i class="material-icons right">fast_forward</i>
+				</button>
+
+				<button class="btn waves-effect waves-light" type="submit"
+					name="action" (click)="saveProfile(profile)">
+					Save <i class="material-icons right">store</i>
+				</button>
+				<button class="btn waves-effect waves-light" name="action"
+					[routerLink]="['/recruitment/profiles']">Cancel</button>
+			</div>
+		</div>
+
+		<div [hidden]="!educationalDetailsTab" id="educationalDetails"
+			class="col s12" style="width: 90%">
+			<div class="row" *ngFor="let qualification of profile.qualifications">
+				<div class="input-field col s6">
+					<select materialize="material_select"
+						[materializeSelectOptions]="selectOptions" name="qualification"
+						[(ngModel)]="qualification.qualification" required>
+						<option value="" disabled selected>Choose your option</option>
+						<option *ngFor="let qul of qualifications" [value]="qul">{{qul}}</option>
+					</select> <label class="">Qualification <font color="red">*</font></label>
+				</div>
+
+				<div class="input-field col s4">
+					<input id="specialization" type="text" class="validate active"
+						name="stream" [(ngModel)]="qualification.stream" required>
+					<label for="specialization" class="active">Specialization
+						<font color="red">*</font>
+					</label>
+				</div>
+				<div class="input-field col s2">
+					<!-- <input class="thumb active value" type="range" min="0" max="100" value="70" step="5" name="percentage" [(ngModel)]="qualification.percentage" > -->
+					<select materialize="material_select"
+						[materializeSelectOptions]="percents" name="percentage"
+						[(ngModel)]="qualification.percentage" required>
+						<option value="" disabled selected>Select Percent</option>
+						<option *ngFor="let percent of percents" [value]="percent">{{percent}}</option>
+					</select> <label for="percentage" style="margin-top: 25px" class="active">Percentage</label>
+				</div>
+			</div>
+			<div class="row" *ngFor="let certication of profile.certifications">
+				<div class="input-field col s6">
+					<input id="certification" type="text" class="validate"
+						name="certification" [(ngModel)]="certication.certification">
+					<label for="certification" class="active">Certification</label>
+				</div>
+				<div class="input-field col s4">
+					<input id="institute" type="text" class="validate" name="institute"
+						[(ngModel)]="certication.institute"> <label
+						for="institute" class="active">Institute/Organization</label>
+				</div>
+				<div class="input-field col s2">
+					<!-- <input id="percentage" type="range" min="0" max="100" value="70" step="5" class="validate" name="score" [(ngModel)]="certication.score" > -->
+					<select materialize="material_select"
+						[materializeSelectOptions]="percents" name="score"
+						[(ngModel)]="certication.score" required>
+						<option value="" disabled selected>Select Percent</option>
+						<option *ngFor="let percent of percents" [value]="percent">{{percent}}</option>
+					</select> <label for="score" style="margin-top: 25px" class="active">Percentage</label>
+				</div>
+			</div>
+			<div class="row" *ngFor="let training of profile.trainings">
+				<div class="input-field col s6">
+					<input id="training-attended" type="text" class="validate"
+						name="training" [(ngModel)]="training.training"> <label
+						for="training-attended" class="active">Training Attended</label>
+				</div>
+				<div class="input-field col s4">
+					<input id="institute" type="text" class="validate"
+						name="trainingInstitute" [(ngModel)]="training.trainingInstitute">
+					<label for="institute" class="active">Institute/Organization</label>
+				</div>
+				<div class="input-field col s2">
+					<input id="training-duration" type="text" class="validate"
+						name="trainingDuration" [(ngModel)]="training.trainingDuration">
+					<label for="training-duration" class="active">Training
+						Duration (Days)</label>
+				</div>
+			</div>
+			<div class="row" *ngFor="let language of profile.languages">
+				<div class="input-field col s6">
+					<input id="language" type="text" class="validate" name="language"
+						[(ngModel)]="language.language"> <label for="language"
+						class="active">Language</label>
+				</div>
+				<div class="input-field col s4">
+					<p class="input-field col s1">
+						<input type="checkbox" class="filled-in" id="filled-in-box1"
+							name="read" [(ngModel)]="language.read"> <label
+							for="filled-in-box1" class="active">Read</label>
+					</p>
+					<p class="input-field col s1" style="margin-left: 60px">
+						<input type="checkbox" class="filled-in" id="filled-in-box2"
+							name="write" [(ngModel)]="language.write"> <label
+							for="filled-in-box2" class="active">Write</label>
+					</p>
+					<p class="input-field col s1" style="margin-left: 60px">
+						<input type="checkbox" class="filled-in" id="filled-in-box3"
+							name="speak" [(ngModel)]="language.speak"> <label
+							for="filled-in-box3" class="active">Speak</label>
+					</p>
+				</div>
+				<div class="input-field col s2">
+					<input id="language" type="text" class="validate"
+						name="proficiency" [(ngModel)]="language.proficiency"> <label
+						for="language" class="active">Proficiency Level</label>
+				</div>
+			</div>
+			<div style="float: right">
+				<button class="btn waves-effect waves-light" name="action"
+					(click)="showTab('personalDetails')">
+					Previous <i class="material-icons left">fast_rewind</i>
+				</button>
+				<button class="btn waves-effect waves-light" name="action"
+					(click)="showTab('otherInfo')">
+					Next <i class="material-icons right">fast_forward</i>
+				</button>
+				<button class="btn waves-effect waves-light" name="action"
+					[routerLink]="['/recruitment/profiles']">Cancel</button>
+			</div>
+		</div>
+
+
+		<div [hidden]="!otherInfoTab" id="otherInfo" class="col s12"
+			style="width: 90%">
+			<div class="row">
+				<div class="input-field col s6">
+					<select multiple materialize="material_select"
+						[materializeSelectOptions]="selectOptions" name="primarySkills"
+						[(ngModel)]="profile.primarySkills" required>
+						<option value="" disabled selected>Choose your option</option>
+						<option *ngFor="let skill of skills" [value]="skill">{{skill}}</option>
+					</select> <label for="skills-set">Skills Set <font color="red">*</font></label>
+				</div>
+				<div class="input-field col s6">
+					<input id="additional-skills" type="text" class="validate"
+						name="additionalSkills" [(ngModel)]="profile.additionalSkills">
+					<label for="additional-skills">Additional Skills</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="currentEmployer" type="text" class="validate"
+						name="currentEmployer" [(ngModel)]="profile.currentEmployer">
+					<label for="currentEmployer" class="active">Current
+						Employer</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="currentDesignation" type="text" class="validate"
+						name="currentDesignation" [(ngModel)]="profile.currentDesignation">
+					<label for="currentDesignation" class="active">Current
+						Designation</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s3">
+					<input id="expYear" type="text" class="validate" name="expYear"
+						[(ngModel)]="profile.expYear" placeholder="year"> <label
+						for="expYear" class="active">Experience</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="expMonth" type="text" class="validate" name="expMonth"
+						[(ngModel)]="profile.expMonth" placeholder="months"> <label
+						for="expMonth" class="active"></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<textarea id="projects" class="materialize-textarea" name="project"
+						[(ngModel)]="profile.project"></textarea>
+					<label for="projects" class="active">Projects Undertaken</label>
+				</div>
+			</div>
+			<div class="row">
+				<input class="input-file" id="my-file" name="my-file" type="file"
+					(change)="onFileSelect()"> <label tabindex="0"
+					style="width: 20%;" for="my-file" class="input-file-trigger">Add
+					Resume<font color="red">*</font>
+				</label>
+			</div>
+			<div style="margin-top: 3%;" class="row" *ngIf="selectedFileList">
+				<p>
+					Selected File : {{selectedFileName}}
+					<button *ngIf="fileDownloadOption"
+						class="btn waves-effect waves-light" (click)="downloadResume()">
+						<i class="material-icons" title="Download">cloud_download</i>
+					</button>
+				</p>
+			</div>
+			<div style="float: right">
+
+				<button class="btn waves-effect waves-light" name="action"
+					(click)="showTab('educationalDetails')">
+					Back <i class="material-icons left">fast_rewind</i>
+				</button>
+				<button class="btn waves-effect waves-light" type="submit"
+					name="action" (click)="saveProfile(profile)">
+					Save <i class="material-icons right">store</i>
+				</button>
+				<button class="btn waves-effect waves-light" type="submit"
+					name="action" (click)="createProfile(profile)"
+					[disabled]="(!profileForm.valid) || (!isFileSelected)">
+					Submit <i class="material-icons right">store</i>
+				</button>
+				<button class="btn waves-effect waves-light" name="action"
+					[routerLink]="['/recruitment/profiles']">Cancel</button>
+
+
+
+			</div>
+		</div>
+
+	</form>
+</div>
+<script>
+$(document).ready(function() {
+	alert("call");
+    Materialize.updateTextFields();
+  });
+        
+</script>

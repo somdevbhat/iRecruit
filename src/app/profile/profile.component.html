@@ -1,0 +1,50 @@
+<div class="col s12">
+ <div >
+      <form class="col s12">
+        <div class="row" style="padding-left: 560px;">
+          <div class="input-field col s5">
+            <input id="input_text" type="text" data-length="10">
+            <label for="input_text"><i for="input_text" class="material-icons">search</i>
+            Search Profile</label>
+          </div>
+          <div class="input-field col s7">
+            <a class="btn-floating btn-large waves-effect waves-light blue" title="Create Profile" [routerLink]="['/recruitment/profiles/createProfile']"><i class="material-icons">add</i></a>
+
+          </div>
+        </div>
+     </form>
+    </div>
+<table class="striped" style="width: 80%;margin-left: 10%;"> <thead>
+	  <tr>
+	    <th>Name</th>
+	    <th>Email Id</th>
+	     <th>Mobile No</th>
+	     <th>Current Designation</th>
+	    <th>Type</th>
+	     <th>Profile Source</th>
+	      <th>Status</th>
+	    <th>Location</th>
+	     <th>Submitted By</th>
+	     <!-- <th>Edit</th> -->
+	  </tr>
+  </thead>
+  <tbody>
+	  	<tr *ngFor="let each of profiles" >
+		    <td>{{each.candidateName}}</td>
+		    <td >{{each.id}}</td>
+		    <td >{{each.mobileNo}}</td>
+		    <td >{{each.designation}}</td>
+		    <td >{{each.profileType}}</td>
+		    <td >{{each.profileSource}}</td>
+		    <td >{{each.status}}</td>
+		    <td >{{each.currentLocation}}</td>
+		    <td >{{each.referredByName}}</td>
+	    	<td><a [routerLink]="['/profiles/',each.emailId]" (click)="setEmailId(each.emailId)">
+	    	<i class="material-icons" title="Edit">mode_edit</i></a></td>
+	    	<td><input type="text" [(ngModel)] = "data" [value]="each.emailId"></td>
+	  </tr>
+  </tbody>
+
+</table>
+</div>
+

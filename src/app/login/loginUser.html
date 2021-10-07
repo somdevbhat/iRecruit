@@ -1,0 +1,34 @@
+<nav class="navbar navbar-fixed-top">
+  <a><img class="brand-logo" style="margin-left:50px" routerLink="/" [src]="fullImagePath" title="OSI"></a>
+  <div class="clearfix">
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+    </ul>
+  </div>
+</nav>
+<div class= "container collapsible backgroundAlign">
+	<h2 style="padding-left: 25%;">User Login</h2>
+	<form #userForm="ngForm">
+		<div class="from-group col s12">
+			<div class="col s3"><label>User Name</label></div>
+			<div class="col s9"><input type= "text" class="form-control userName" name="name" [(ngModel)]="loginUser.userName" required  #uname="ngModel"
+				 placeholder="User Name" style="width:65%"></div>
+			<div *ngIf="uname.errors &&(uname.touched ||uname.dirty)" class="alert alert-danger">
+			<div [hidden]=!uname.errors.required>
+        <font color="red"> Name is required. </font>
+			</div>
+			</div>
+		 </div>
+		 <div class="from-group col s12">
+       <div class="col s3"><label>Password</label></div>
+       <div class="col s9"><input type= "password" class="form-control password" name="password" [(ngModel)]="loginUser.password" #upassword="ngModel"
+                                  required placeholder="Password" style="width:65%"></div>
+			<div *ngIf="upassword.errors &&(upassword.touched ||upassword.dirty)" class="alert alert-danger">
+			<div [hidden]=!upassword.errors.required>
+        <font color="red"> Password is required. </font>
+			</div>
+			</div>
+		 </div>
+		 <button type="submit" class="btn btn-primary" id="loginBtn" (click)="login()" [disabled]="!userForm.valid">Login</button>
+	</form>
+</div>
